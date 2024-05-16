@@ -111,6 +111,8 @@ public class OrderRepository {
 
     public List<Order> findAllWithItem() {
         return em.createQuery(
+                // distinct는 DB에도 distinct 키워드를 날려주고, 엔티티가 중복인 경우 중복을 걸러서 컬렉션에 담아줌(여기선 Order 엔티티)
+                // 단점은 컬렉션 패치 조인을 사용하면 페이징이 불가.. 하이버네이트가 메모리에서 페이징해버려서 과부하걸릴거임
                 "select distinct o from Order o" +
                         " join fetch o.member m" +
                         " join fetch o.delivery d" +
